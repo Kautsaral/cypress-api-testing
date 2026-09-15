@@ -55,6 +55,8 @@ describe('Latihan API test', () => {
     }).then((response) => {
       expect(response.status).to.eq(200);
       expect(response.body.lastname).to.eq("Tubruk");
+      expect(response.body.totalprice).to.eq(250000);
+      expect(response.body.depositpaid).to.eq(true);
     });
   });
 
