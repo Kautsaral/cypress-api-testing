@@ -42,6 +42,9 @@ describe('Latihan API test', () => {
       expect(response.body).to.have.property('bookingid');
       bookingId = response.body.bookingid; 
       expect(response.body.booking.firstname).to.eq("El");
+      expect(response.body.booking.lastname).to.eq("Tubruk");
+      expect(response.body.booking.totalprice).to.eq(250000);
+      expect(response.body.booking.depositpaid).to.eq(true);
     });
   });
 
