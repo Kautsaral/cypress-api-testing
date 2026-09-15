@@ -8,6 +8,7 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   cypress:
@@ -28,24 +29,23 @@ jobs:
 
       - name: Check credentials
         env:
-          API_USERNAME: ${{ secrets.API_USERNAME }}
-          API_PASSWORD: ${{ secrets.API_PASSWORD }}
+          CYPRESS_API_USERNAME: ${{ secrets.API_USERNAME }}
+          CYPRESS_API_PASSWORD: ${{ secrets.API_PASSWORD }}
         run: |
-          if [ -z "$API_USERNAME" ]; then
+          if [ -z "$CYPRESS_API_USERNAME" ]; then
             echo "API_USERNAME is missing"
             exit 1
           fi
 
-          if [ -z "$API_PASSWORD" ]; then
+          if [ -z "$CYPRESS_API_PASSWORD" ]; then
             echo "API_PASSWORD is missing"
             exit 1
           fi
 
-          echo "API_USERNAME is configured"
-          echo "API_PASSWORD is configured"
+          echo "Cypress credentials are configured"
 
       - name: Run Cypress tests
         env:
-          API_USERNAME: ${{ secrets.API_USERNAME }}
-          API_PASSWORD: ${{ secrets.API_PASSWORD }}
+          CYPRESS_API_USERNAME: ${{ secrets.API_USERNAME }}
+          CYPRESS_API_PASSWORD: ${{ secrets.API_PASSWORD }}
         run: npx cypress run
