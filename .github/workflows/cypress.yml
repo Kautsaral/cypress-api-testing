@@ -27,4 +27,7 @@ jobs:
         run: npm ci
 
       - name: Run Cypress tests
+        env:
+            API_USERNAME: ${{ secrets.API_USERNAME }}
+            API_PASSWORD: ${{ secrets.API_PASSWORD }}
         run: npx cypress run
