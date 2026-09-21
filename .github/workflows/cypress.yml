@@ -49,3 +49,16 @@ jobs:
           CYPRESS_API_USERNAME: ${{ secrets.API_USERNAME }}
           CYPRESS_API_PASSWORD: ${{ secrets.API_PASSWORD }}
         run: npx cypress run
+
+      - name: Generate Mochawesome report
+        if: always()
+        run: |
+          npm run report:merge
+          npm run report:generate
+
+      - name: Upload Mochawesome report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-mochawesome-report
+          path: cypress/reports/
