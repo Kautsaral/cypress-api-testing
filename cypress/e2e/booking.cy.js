@@ -1,4 +1,4 @@
-describe('Latihan API test', () => {
+describe('Skenario Booking API', () => {
 
   let bookingId; //  ID untuk dipakai di skenario lain
   let authToken; //  token
