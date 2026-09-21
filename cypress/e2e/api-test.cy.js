@@ -99,7 +99,7 @@ describe('Latihan API test', () => {
   })
   it('TEST FAILED - Demo CI Report', () => {
   expect(true).to.eq(false);
-});git
+  });
 });
 
 
