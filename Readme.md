@@ -1,109 +1,76 @@
-# 🚀 Cypress API Automation - Panduan Cepat & Cheatsheet
+# 🚀 Cypress API Testing Automation
 
-Dokumen ini berisi panduan instalasi dari nol hingga proses push ke GitHub. Sangat cocok dibuka di VS Code atau editor Markdown lainnya sebagai referensi cepat saat Live Test.
+Repositori ini berisi proyek otomatisasi pengujian API (API Testing) menggunakan **Cypress**. Proyek ini dibangun sebagai portofolio QA Engineering untuk mendemonstrasikan pengujian endpoint API yang terstruktur, validasi respons (status code, body, schema), serta integrasi CI/CD.
 
-## 📋 Prasyarat
-Pastikan perangkat sudah terinstal:
-- Node.js (Cek dengan `node -v`)
-- Git (Cek dengan `git --version`)
+## 🛠️ Tech Stack
+*   **Framework:** [Cypress](https://www.cypress.io/)
+*   **Language:** JavaScript (Node.js)
+*   **CI/CD:** GitHub Actions
 
----
+## 📂 Struktur Direktori
 
-## 🛠️ 1. Instalasi & Inisialisasi Proyek
+Proyek ini menggunakan struktur standar Cypress yang telah dioptimalkan:
 
-Buka terminal dan jalankan perintah berikut secara berurutan:
-
-```bash
-# 1. Buat folder proyek baru
-mkdir live-test-api
-cd live-test-api
-
-# 2. Inisialisasi Node.js (otomatis membuat package.json)
-npm init -y
-
-# 3. Install Cypress sebagai development dependency
-npm install cypress --save-dev
+```text
+cypress-api-testing/
+├── .github/workflows/
+│   └── cypress.yml         # Konfigurasi CI/CD GitHub Actions
+├── cypress/
+│   ├── e2e/
+│   │   └── api-test.cy.js  # File utama skenario pengujian API
+│   ├── fixtures/
+│   │   └── example.json    # Data test statis (payload/response mock)
+│   └── support/
+│       ├── commands.js     # Custom commands Cypress (misal: login API)
+│       └── e2e.js          # File konfigurasi global sebelum test berjalan
+├── cypress.config.js       # Konfigurasi utama Cypress
+├── package.json            # Daftar dependensi dan script eksekusi
+└── README.md               # Dokumentasi proyek
 ```
 
-> *Catatan: Proses instalasi Cypress akan mengunduh binary file. Tunggu hingga terminal kembali menampilkan prompt kursor (misal: `nama-user@MacBook-Air %`).*
+## 🎯 Skenario Pengujian (Test Coverage)
+Pada proyek ini, endpoint yang diuji adalah `https://restful-booker.herokuapp.com/apidoc/index.html`. Skenario yang dicakup antara lain:
+
+*   **GET:** Memvalidasi status code `200 OK`, response time, dan kebenaran skema data yang dikembalikan.
+*   **POST:** Mengirimkan *payload* dari `fixtures`, memvalidasi proses pembuatan data berhasil (status `201 Created`).
+*   **PUT:** Memastikan pembaruan data berhasil dan tervalidasi.
+*   **DELETE:** Memastikan data terhapus (status `201`).
+
+## ⚙️ Prasyarat
+Sebelum menjalankan proyek ini di mesin lokal, pastikan kamu sudah menginstal:
+*   [Node.js](https://nodejs.org/) (Versi 14 ke atas)
+*   Git
+
+## 🚀 Cara Instalasi dan Penggunaan
+
+1. **Clone repositori ini:**
+   ```bash
+   git clone https://github.com/Kautsaral/cypress-api-testing.git
+   cd cypress-api-testing
+   ```
+
+2. **Instal dependensi:**
+   ```bash
+   npm install
+   ```
+
+3. **Jalankan Pengujian (Headless Mode):**
+   Direkomendasikan untuk melihat hasil secara cepat di terminal.
+   ```bash
+   npx cypress run
+   ```
+
+4. **Jalankan Pengujian (Interactive UI Mode):**
+   Jika ingin melihat proses eksekusi dan melakukan *debugging*.
+   ```bash
+   npx cypress open
+   ```
+
+## 🔄 Continuous Integration (CI/CD)
+Proyek ini sudah terintegrasi dengan **GitHub Actions**. Setiap kali ada *push* atau *pull request* ke *branch* `main`, *workflow* yang ada di `.github/workflows/cypress.yml` akan secara otomatis menjalankan seluruh skrip pengujian Cypress di *environment* Ubuntu. 
+
+Kamu bisa melihat riwayat eksekusi pengujian pada tab **Actions** di repositori ini.
 
 ---
-
-## 🏗️ 2. Konfigurasi Awal Cypress
-
-Setelah instalasi selesai, inisialisasi struktur folder Cypress:
-
-```bash
-npx cypress open
-```
-1. Pilih **E2E Testing**.
-2. Klik **Continue**.
-3. Pilih browser (misal: Chrome) lalu klik **Start E2E Testing**.
-4. Setelah UI terbuka, langsung tutup browser dan terminal Cypress. Lanjut bekerja di IDE (VS Code).
-
----
-
-## 💻 3. Menjalankan Test
-
-Untuk API Testing, sangat disarankan menjalankan test secara *headless* (via terminal) agar eksekusi lebih cepat:
-
-```bash
-# Menjalankan spesifik file test (tanpa membuka UI browser)
-npx cypress run --spec "cypress/e2e/api-test.cy.js"
-```
-
----
-
-## 🐙 4. Alur Git & Push ke GitHub
-
-Sangat penting untuk **tidak** mem-push folder `node_modules` ke GitHub karena ukurannya sangat besar. Kita harus membuat file `.gitignore` terlebih dahulu.
-
-### A. Persiapan File Ignore
-Jalankan perintah ini di terminal untuk otomatis membuat file `.gitignore`:
-```bash
-echo "node_modules/" >> .gitignore
-echo "cypress/videos/" >> .gitignore
-echo "cypress/screenshots/" >> .gitignore
-```
-
-### B. Inisialisasi dan Push ke Repository Baru
-Setelah membuat repository kosong di GitHub, ikuti langkah ini:
-
-```bash
-# 1. Inisialisasi Git di folder proyekmu
-git init
-
-# 2. Cek status file (memastikan node_modules tidak ikut masuk)
-git status
-
-# 3. Tambahkan semua file ke staging area
-git add .
-
-# 4. Buat commit pertama
-git commit -m "chore: initial commit setup Cypress API testing"
-
-# 5. Ubah nama branch utama menjadi 'main' (standar GitHub saat ini)
-git branch -M main
-
-# 6. Hubungkan lokal dengan repository GitHub
-# (GANTI URL DI BAWAH DENGAN URL REPOSITORY MILIKMU)
-git remote add origin https://github.com/username/live-test-api.git
-
-# 7. Push kode ke GitHub
-git push -u origin main
-```
-
-### C. Alur Kerja Lanjutan (Referensi)
-Jika ke depannya kamu perlu update kode, tarik data, atau membuat branch baru:
-
-- **Mengecek update dari repository (jika kerja tim):** 
-  `git pull origin main`
-- **Membuat dan pindah ke branch baru:** 
-  `git checkout -b feature/skenario-post`
-- **Menyimpan perubahan (setelah mengedit code):**
-  `git add .`
-  `git commit -m "test: add negative scenario for API"`
-  `git push origin feature/skenario-post`
-  
----
-*Catatan Tambahan: Jika terjadi error conflict saat push dan kamu yakin kodemu yang paling benar, kamu bisa menggunakan `git push --force-with-lease` (opsi yang lebih aman dibanding `--force`).*
+**Author:** @Kautsral  
+*Quality Assurance Engineer*
