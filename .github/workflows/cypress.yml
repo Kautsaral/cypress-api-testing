@@ -31,6 +31,7 @@ jobs:
         env:
           CYPRESS_API_USERNAME: ${{ secrets.API_USERNAME }}
           CYPRESS_API_PASSWORD: ${{ secrets.API_PASSWORD }}
+          CYPRESS_INVALID_PASSWORD: ${{ secrets.INVALID_PASSWORD }}
         run: |
           if [ -z "$CYPRESS_API_USERNAME" ]; then
             echo "API_USERNAME is missing"
@@ -48,6 +49,7 @@ jobs:
         env:
           CYPRESS_API_USERNAME: ${{ secrets.API_USERNAME }}
           CYPRESS_API_PASSWORD: ${{ secrets.API_PASSWORD }}
+          CYPRESS_INVALID_PASSWORD: ${{ secrets.INVALID_PASSWORD }}
         run: npx cypress run
 
       - name: Generate Mochawesome report
