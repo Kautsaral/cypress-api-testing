@@ -97,9 +97,6 @@ describe('Latihan API test', () => {
       expect(response.status).to.eq(201);
     })
   })
-  it('TEST FAILED - Demo CI Report', () => {
-  expect(true).to.eq(false);
-  });
 });
 
 
