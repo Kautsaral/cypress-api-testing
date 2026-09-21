@@ -97,9 +97,6 @@ describe('Latihan API test', () => {
       expect(response.status).to.eq(201);
     })
   })
-
-
-
 });
 
 
