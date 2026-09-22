@@ -1,6 +1,6 @@
 describe('Skenario Authentication API', () => {
 
-  it('1. POST - Success Login', () => {
+  it('POST - Success Login', () => {
     cy.env(['API_USERNAME', 'API_PASSWORD']).then(
     ({ API_USERNAME, API_PASSWORD }) => {
       cy.request({
@@ -17,7 +17,7 @@ describe('Skenario Authentication API', () => {
     });
     });
 
-  it('2. POST - Invalid Credentials', () => {
+  it('POST - Invalid Credentials', () => {
     cy.env(['API_USERNAME', 'INVALID_PASSWORD']).then(
     ({ API_USERNAME, INVALID_PASSWORD }) => {
     cy.request({
@@ -35,13 +35,12 @@ describe('Skenario Authentication API', () => {
     });
   });
 
-  it('3. POST - Login Gagal karena Username Kosong (Negative Case)', () => {
+  it('POST - Username Empty', () => {
     cy.env(['API_PASSWORD']).then(
     ({ API_PASSWORD }) => {
     cy.request({    
       method: 'POST',
       url: '/auth',
-      failOnStatusCode: false,
       body: {
         "password": API_PASSWORD
       }

@@ -1,0 +1,25 @@
+{
+  "createBooking": {
+    "firstname": "El",
+    "lastname": "Tubruk",
+    "totalprice": 250000,
+    "depositpaid": true,
+    "bookingdates": {
+      "checkin": "2026-09-14",
+      "checkout": "2026-09-20"
+    },
+    "additionalneeds": "Extra bantal"
+  },
+
+  "updateBooking": {
+    "firstname": "Dul",
+    "lastname": "Uncle",
+    "totalprice": 500000,
+    "depositpaid": false,
+    "bookingdates": {
+      "checkin": "2026-09-14",
+      "checkout": "2026-09-20"
+    },
+    "additionalneeds": "Extra bantal dan sarapan"
+  }
+}
