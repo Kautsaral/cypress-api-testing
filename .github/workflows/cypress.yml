@@ -50,7 +50,7 @@ jobs:
           CYPRESS_API_USERNAME: ${{ secrets.API_USERNAME }}
           CYPRESS_API_PASSWORD: ${{ secrets.API_PASSWORD }}
           CYPRESS_INVALID_PASSWORD: ${{ secrets.INVALID_PASSWORD }}
-        run: npx cypress run
+        run: npx cypress run --browser chrome
 
       - name: Generate Mochawesome report
         if: always()
