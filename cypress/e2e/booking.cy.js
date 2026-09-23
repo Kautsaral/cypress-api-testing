@@ -89,7 +89,6 @@ describe("Skenario Booking API", () => {
     });
   });
 
-
   describe("Negative Scenario", () => {
     describe("Booking notfound", () => {
       it("GET - Booking ID notfound", () => {
@@ -120,6 +119,26 @@ describe("Skenario Booking API", () => {
         cy.deleteBookingWithoutAuth(negativeBookingId).then((response) => {
           expect(response.status).to.eq(403);
           expect(response.body).to.eq("Forbidden");
+        });
+      });
+    });
+
+    describe("Invalid Booking Payload", () => {
+      it("POST - Create Booking tanpa firstname", () => {
+        const invalidBookingData = {
+          ...bookingData.createBooking,
+        };
+
+        delete invalidBookingData.firstname;
+
+        cy.request({
+          method: "POST",
+          url: "/booking",
+          body: invalidBookingData,
+          failOnStatusCode: false,
+        }).then((response) => {
+          expect(response.status).to.eq(500);
+          expect(response.body).to.eq("Internal Server Error");
         });
       });
     });
