@@ -1,76 +1,249 @@
-# 🚀 Cypress API Testing Automation
+# Cypress API Automation Testing
 
-Repositori ini berisi proyek otomatisasi pengujian API (API Testing) menggunakan **Cypress**. Proyek ini dibangun sebagai portofolio QA Engineering untuk mendemonstrasikan pengujian endpoint API yang terstruktur, validasi respons (status code, body, schema), serta integrasi CI/CD.
+API test automation project built using Cypress for testing the Restful Booker API.
 
-## 🛠️ Tech Stack
-*   **Framework:** [Cypress](https://www.cypress.io/)
-*   **Language:** JavaScript (Node.js)
-*   **CI/CD:** GitHub Actions
+This project demonstrates API automation testing practices including positive and negative testing, reusable API functions, data-driven testing, test reporting, and CI/CD integration using GitHub Actions.
 
-## 📂 Struktur Direktori
+## Tech Stack
 
-Proyek ini menggunakan struktur standar Cypress yang telah dioptimalkan:
+- Cypress
+- JavaScript
+- Node.js
+- Mochawesome
+- GitHub Actions
+- Prettier
+- ESLint
+
+## Test Coverage
+
+The project currently contains 18 automated API test cases covering:
+
+### Authentication
+
+- Successful login
+- Invalid username
+- Invalid password
+- Empty username
+- Empty password
+- Empty username and password
+
+### Booking
+
+- Create booking
+- Get booking by ID
+- Update booking
+- Delete booking
+- Booking not found
+- Update booking without authentication
+- Delete booking without authentication
+- Invalid booking payload scenarios
+
+## Project Structure
 
 ```text
-cypress-api-testing/
-├── .github/workflows/
-│   └── cypress.yml         # Konfigurasi CI/CD GitHub Actions
-├── cypress/
-│   ├── e2e/
-│   │   └── api-test.cy.js  # File utama skenario pengujian API
-│   ├── fixtures/
-│   │   └── example.json    # Data test statis (payload/response mock)
-│   └── support/
-│       ├── commands.js     # Custom commands Cypress (misal: login API)
-│       └── e2e.js          # File konfigurasi global sebelum test berjalan
-├── cypress.config.js       # Konfigurasi utama Cypress
-├── package.json            # Daftar dependensi dan script eksekusi
-└── README.md               # Dokumentasi proyek
+cypress/
+├── e2e/
+│   ├── auth.cy.js
+│   └── booking.cy.js
+├── fixtures/
+│   ├── auth.json
+│   └── booking.json
+├── support/
+│   ├── api/
+│   │   ├── auth.api.js
+│   │   └── booking.api.js
+│   ├── helpers/
+│   │   └── auth.helper.js
+│   └── e2e.js
+└── reports/
 ```
 
-## 🎯 Skenario Pengujian (Test Coverage)
-Pada proyek ini, endpoint yang diuji adalah `https://restful-booker.herokuapp.com/apidoc/index.html`. Skenario yang dicakup antara lain:
+## Installation
 
-*   **GET:** Memvalidasi status code `200 OK`, response time, dan kebenaran skema data yang dikembalikan.
-*   **POST:** Mengirimkan *payload* dari `fixtures`, memvalidasi proses pembuatan data berhasil (status `201 Created`).
-*   **PUT:** Memastikan pembaruan data berhasil dan tervalidasi.
-*   **DELETE:** Memastikan data terhapus (status `201`).
+Clone the repository:
 
-## ⚙️ Prasyarat
-Sebelum menjalankan proyek ini di mesin lokal, pastikan kamu sudah menginstal:
-*   [Node.js](https://nodejs.org/) (Versi 14 ke atas)
-*   Git
+```bash
+git clone https://github.com/Kautsaral/cypress-api-testing.git
+cd cypress-api-testing
+```
 
-## 🚀 Cara Instalasi dan Penggunaan
+Install dependencies:
 
-1. **Clone repositori ini:**
-   ```bash
-   git clone https://github.com/Kautsaral/cypress-api-testing.git
-   cd cypress-api-testing
-   ```
+```bash
+npm ci
+```
 
-2. **Instal dependensi:**
-   ```bash
-   npm install
-   ```
+## Environment Configuration
 
-3. **Jalankan Pengujian (Headless Mode):**
-   Direkomendasikan untuk melihat hasil secara cepat di terminal.
-   ```bash
-   npx cypress run
-   ```
+The authentication tests require API credentials.
 
-4. **Jalankan Pengujian (Interactive UI Mode):**
-   Jika ingin melihat proses eksekusi dan melakukan *debugging*.
-   ```bash
-   npx cypress open
-   ```
+The following Cypress environment variables are used:
 
-## 🔄 Continuous Integration (CI/CD)
-Proyek ini sudah terintegrasi dengan **GitHub Actions**. Setiap kali ada *push* atau *pull request* ke *branch* `main`, *workflow* yang ada di `.github/workflows/cypress.yml` akan secara otomatis menjalankan seluruh skrip pengujian Cypress di *environment* Ubuntu. 
+```text
+CYPRESS_API_USERNAME
+CYPRESS_API_PASSWORD
+```
 
-Kamu bisa melihat riwayat eksekusi pengujian pada tab **Actions** di repositori ini.
+For CI/CD, credentials are stored securely using GitHub Actions Secrets and are not committed to the repository.
 
----
-**Author:** @Kautsral  
-*Quality Assurance Engineer*
+## Running Tests
+
+Run all Cypress API tests:
+
+```bash
+npx cypress run
+```
+
+Run tests using Chrome:
+
+```bash
+npx cypress run --browser chrome
+```
+
+Run only the authentication tests:
+
+```bash
+npx cypress run --spec "cypress/e2e/auth.cy.js"
+```
+
+Run only the booking tests:
+
+```bash
+npx cypress run --spec "cypress/e2e/booking.cy.js"
+```
+
+## Code Quality
+
+Check formatting:
+
+```bash
+npm run format:check
+```
+
+Format the code:
+
+```bash
+npm run format
+```
+
+Run ESLint:
+
+```bash
+npm run lint
+```
+
+## Test Reporting
+
+Generate the Mochawesome report:
+
+```bash
+npm run test:report
+```
+
+The generated HTML report is available at:
+
+```text
+cypress/reports/html/index.html
+```
+
+GitHub Actions also uploads the Mochawesome report as an artifact. When tests fail, Cypress failure screenshots are uploaded as a separate artifact for debugging.
+
+## Framework Architecture
+
+The project separates test scenarios, API requests, reusable workflows, and test data to keep the automation framework maintainable and reusable.
+
+```text
+Test Specs
+(auth.cy.js / booking.cy.js)
+        │
+        ├──── Fixtures
+        │     (Test Data)
+        │
+        ├──── Helpers
+        │     (Reusable Workflows)
+        │
+        ▼
+    API Layer
+(auth.api.js / booking.api.js)
+        │
+        ▼
+ Restful Booker API
+```
+
+### Test Specs
+
+Test specifications contain test scenarios and assertions.
+
+```text
+cypress/e2e/
+```
+
+### API Layer
+
+API request logic is separated from the test specifications.
+
+```text
+cypress/support/api/
+```
+
+This allows API functions such as login, create booking, get booking, update booking, and delete booking to be reused across different test scenarios.
+
+### Helpers
+
+Helpers contain reusable workflows that may combine multiple steps.
+
+For example, `getValidAuthToken()` retrieves valid credentials, performs authentication, validates the response, and returns the authentication token.
+
+```text
+cypress/support/helpers/
+```
+
+### Fixtures
+
+Fixtures contain reusable test data for authentication and booking scenarios.
+
+```text
+cypress/fixtures/
+```
+
+The project also uses data-driven testing, allowing multiple test scenarios to be generated from fixture data without duplicating test logic.
+
+## CI/CD Pipeline
+
+GitHub Actions automatically runs the automation pipeline on configured pushes and pull requests.
+
+```text
+Push / Pull Request
+        │
+        ▼
+Install Dependencies
+        │
+        ▼
+Prettier Check
+        │
+        ▼
+ESLint
+        │
+        ▼
+Credential Check
+        │
+        ▼
+Cypress API Tests
+        │
+        ▼
+Mochawesome Report
+        │
+        ▼
+GitHub Actions Artifacts
+```
+
+The CI pipeline performs:
+
+- Dependency installation using `npm ci`
+- Code formatting validation using Prettier
+- Static code analysis using ESLint
+- Secure credential validation using GitHub Actions Secrets
+- Cypress API test execution using Chrome
+- Mochawesome report generation
+- Mochawesome report artifact upload
+- Failure screenshot artifact upload when tests fail
