@@ -1,8 +1,16 @@
+# Dependencies
 node_modules/
+
+# Cypress generated files
 cypress/screenshots/
+cypress/videos/
+cypress/reports/
+
+# Local environment / credentials
 cypress.env.json
-cypress/e2e/test1.cy.js
-cypress/e2e/test2.cy.js
 .env
 .env.*
-cypress/reports/
+
+# OS files
+.DS_Store
+Thumbs.db
