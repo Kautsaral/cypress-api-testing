@@ -1,8 +1,7 @@
 {
-  "name": "automation",
+  "name": "cypress-api-testing",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "API test automation framework using Cypress, Mochawesome, and GitHub Actions",
   "scripts": {
     "clean:report": "rimraf cypress/reports",
     "cy:run": "cypress run",
@@ -13,8 +12,13 @@
     "format:check": "prettier --check \"cypress/**/*.{js,json}\"",
     "lint": "eslint \"cypress/**/*.js\""
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "cypress",
+    "api-testing",
+    "test-automation",
+    "qa"
+  ],
+  "author": "Al Kautsar",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
