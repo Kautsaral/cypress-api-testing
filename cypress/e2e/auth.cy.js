@@ -6,7 +6,7 @@ describe("Skenario Authentication API", () => {
     cy.env(["API_USERNAME", "API_PASSWORD"]).then(
       ({ API_USERNAME, API_PASSWORD }) => {
         login(API_USERNAME, API_PASSWORD).then((response) => {
-          expect(response.status).to.eq(201);
+          expect(response.status).to.eq(200);
           expect(response.body).to.have.property("token");
         });
       },
