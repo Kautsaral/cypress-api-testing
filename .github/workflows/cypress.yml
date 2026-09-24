@@ -27,6 +27,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Check code formatting
+        run: npm run format:check
+
+      - name: Run ESLint
+        run: npm run lint
+
       - name: Check credentials
         env:
           CYPRESS_API_USERNAME: ${{ secrets.API_USERNAME }}

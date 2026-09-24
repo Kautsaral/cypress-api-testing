@@ -4,11 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-   "clean:report": "rimraf cypress/reports",
+    "clean:report": "rimraf cypress/reports",
     "cy:run": "cypress run",
     "report:merge": "mochawesome-merge cypress/reports/mochawesome*.json > cypress/reports/merged.json",
     "report:generate": "marge cypress/reports/merged.json -f index -o cypress/reports/html",
-    "test:report": "npm run clean:report && npm run cy:run && npm run report:merge && npm run report:generate"
+    "test:report": "npm run clean:report && npm run cy:run && npm run report:merge && npm run report:generate",
+    "format": "prettier --write \"cypress/**/*.{js,json}\"",
+    "format:check": "prettier --check \"cypress/**/*.{js,json}\"",
+    "lint": "eslint \"cypress/**/*.js\""
   },
   "keywords": [],
   "author": "",
@@ -16,9 +19,12 @@
   "type": "commonjs",
   "devDependencies": {
     "cypress": "^16.0.0",
+    "eslint": "^10.11.0",
+    "eslint-plugin-cypress": "^7.0.2",
     "mochawesome": "^8.1.0",
     "mochawesome-merge": "^5.1.1",
     "mochawesome-report-generator": "^6.3.2",
+    "prettier": "^3.9.9",
     "rimraf": "^6.1.3"
   }
 }
