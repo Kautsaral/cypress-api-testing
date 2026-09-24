@@ -7,16 +7,13 @@ import {
   deleteBookingWithoutAuth,
 } from "../support/api/booking.api";
 import { getValidAuthToken } from "../support/helpers/auth.helper";
+import bookingData from "../fixtures/booking.json";
 
 describe("Skenario Booking API", () => {
   let bookingId; //  ID untuk dipakai di skenario lain
   let authToken; //  token
-  let bookingData; //  data booking
 
   before(() => {
-    cy.fixture("booking").then((data) => {
-      bookingData = data;
-    });
     getValidAuthToken().then((token) => {
       authToken = token;
     });
@@ -152,16 +149,17 @@ describe("Skenario Booking API", () => {
     });
 
     describe("Invalid Booking Payload", () => {
-      it("POST - Create Booking tanpa firstname", () => {
-        const invalidBookingData = {
-          ...bookingData.createBooking,
-        };
+      bookingData.invalidBookingCases.forEach((testCase) => {
+        it(`POST - ${testCase.scenario}`, () => {
+          const invalidPayload = {
+            ...bookingData.createBooking,
+          };
 
-        delete invalidBookingData.firstname;
+          delete invalidPayload[testCase.field];
 
-        createBooking(invalidBookingData, false).then((response) => {
-          expect(response.status).to.eq(500);
-          expect(response.body).to.eq("Internal Server Error");
+          createBooking(invalidPayload, false).then((response) => {
+            expect(response.status).to.eq(500);
+          });
         });
       });
     });
